@@ -25,6 +25,7 @@ public class ApplicationListener implements ServletContextListener {
         sce.getServletContext().setAttribute(Constants.COACH_MAP, mapCoaches);
         Map<Integer, SpecialityEntity> mapSpeciality = serviceManager.getBusinessService().mapSpeciality();
         sce.getServletContext().setAttribute(Constants.SPECIALITY_MAP, mapSpeciality);
+        sce.getServletContext().setAttribute("social_googleplus_clientId", serviceManager.getApplicationProperty("social.googleplus.clientId"));
         ServiceManager.getInstance(sce.getServletContext());
         LOGGER.info("Application started");
 

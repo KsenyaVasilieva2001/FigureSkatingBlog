@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" 	  	uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" 	  		uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <p class="text-center fs-1 m-4">Видео</p>
 
 <div class="container">
@@ -26,12 +28,21 @@
                 <br>
                     </div>
                     <section class = "comments">
+
                         <jsp:include page="../fragment/newComment.jsp" />
-                        <jsp:include page="../fragment/videoComment.jsp" />
+                        <div id="comments-list-container" data-comments-count="${article.comments}" data-id-article="${article.id}">
+                            <jsp:include page="../fragment/videoComment.jsp" />
+                        </div>
+                        <div class="d-flex justify-content-center m-4" id = "comments-load-more-ctrl">
+                            <a href="javascript:moreComments();" class="btn btn-block btn-lg text-body special load-more-btn"
+                            ${article.comments >  fn:length(comments) ? '' : 'style="display:none"' }>Загрузить еще</a>
+                            <img src="https://acegif.com/wp-content/uploads/loading-97.gif" style="width: 20%" class="loading-indicator" />
+                        </div>
+
                     </section>
                 </div>
             </div>
-            <div class="col-3 navig right">
+            <div class="col-lg-3 col-sm-6 navig right">
                 <div class="card p-3">
                     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                        <jsp:include page="../fragment/videoCategory.jsp" />

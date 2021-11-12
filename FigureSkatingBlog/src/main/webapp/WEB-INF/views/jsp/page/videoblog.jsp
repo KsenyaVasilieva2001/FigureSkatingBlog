@@ -42,9 +42,9 @@
 
             </div>
 
-            <div class="col-3 navig right">
+            <div class="col-lg-3 col-sm-6 navig right">
                 <div class="card p-3 mb-5">
-                    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <div class="nav flex-column nav-pills panel" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                         <jsp:include page="../fragment/videoCategory.jsp" />
                     </div>
                     <form action="${pageContext.request.contextPath}/search" method="GET">

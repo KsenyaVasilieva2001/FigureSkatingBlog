@@ -1,21 +1,31 @@
 package ru.kpfu.itis.services.impls;
 
 import ru.kpfu.itis.DAO.SQLDAO;
+import ru.kpfu.itis.constants.Constants;
 import ru.kpfu.itis.entities.*;
-import ru.kpfu.itis.exceptions.ApplicationException;
-import ru.kpfu.itis.exceptions.RedirectToValidUrlException;
+import ru.kpfu.itis.exceptions.*;
+import ru.kpfu.itis.forms.CommentForm;
+import ru.kpfu.itis.forms.ContactForm;
 import ru.kpfu.itis.models.Items;
 import ru.kpfu.itis.services.BusinessService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BusinessServiceImpl implements BusinessService {
     private final DataSource dataSource;
     private final SQLDAO sql;
+    private String auth = null ;
 
     protected BusinessServiceImpl(ServiceManager serviceManager) {
         super();
@@ -159,8 +169,30 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public List<CommentForArticle> listCommentsArticle(Long idArticle, int offset, int limit) {
-        return null;
+        try (Connection c = dataSource.getConnection()) {
+            return sql.listComments(c, idArticle, offset, limit);
+        } catch (SQLException e) {
+            throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
+        }
     }
 
+    @Override
+    public void createContactRequest(ContactForm form) throws ValidateException {
 
+    }
+
+    @Override
+    public CommentForArticle createComment(CommentForm form, UserEntity user){
+        try (Connection c = dataSource.getConnection()) {
+            CommentForArticle comment = sql.createComment(c, form, user.getId());
+            comment.setAccount(user);
+            ArticleEntity article = sql.findArticleForNewCommentNotification(c, form.getIdArticle());
+            article.setComments(sql.countComments(c, article.getId()));
+            sql.updateArticleComments(c, article);
+            c.commit();
+            return comment;
+        } catch (SQLException | RuntimeException e) {
+            throw new ApplicationException("Can't create new comment: " + e.getMessage(), e);
+        }
+    }
 }

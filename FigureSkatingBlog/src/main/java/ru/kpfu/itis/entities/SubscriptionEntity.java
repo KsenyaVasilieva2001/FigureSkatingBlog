@@ -3,9 +3,9 @@ package ru.kpfu.itis.entities;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-public class ApplicationEntity extends AbstractEntity<Long>{
+public class SubscriptionEntity extends AbstractEntity<Long>{
     private String studentName;
-    private String phone_number;
+    private String phoneNumber;
     private Timestamp created;
 
     public String getStudentName() {
@@ -16,12 +16,12 @@ public class ApplicationEntity extends AbstractEntity<Long>{
         this.studentName = studentName;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phone_number) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Timestamp getCreated() {
@@ -37,12 +37,12 @@ public class ApplicationEntity extends AbstractEntity<Long>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        ApplicationEntity that = (ApplicationEntity) o;
-        return Objects.equals(studentName, that.studentName) && Objects.equals(phone_number, that.phone_number);
+        SubscriptionEntity that = (SubscriptionEntity) o;
+        return Objects.equals(studentName, that.studentName) && Objects.equals(phoneNumber, that.phoneNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), studentName, phone_number, created);
+        return Objects.hash(super.hashCode(), studentName, phoneNumber, created);
     }
 }

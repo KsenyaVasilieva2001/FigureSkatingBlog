@@ -5,13 +5,16 @@ package ru.kpfu.itis.DAO;
 import java.sql.*;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
+import org.postgresql.core.ResultHandler;
 import ru.kpfu.itis.DAO.mapper.*;
 import ru.kpfu.itis.entities.*;
+import ru.kpfu.itis.forms.CommentForm;
 
 
 //методы для работы с базой данных
@@ -105,8 +108,56 @@ public final class SQLDAO {
     }
 
     public List<CommentForArticle> listComments(Connection c, long idArticle, int offset, int limit) throws SQLException {
-        return sql.query(c, "select c.*, a.name, a.email, a.created as accountCreated, a.avatar from "
-                        + "comment c_article, account a where a.id=c.id_account and c.id_article=? order by c.id desc limit ? offset ?",
+        return sql.query(c, "select c.*, a.login, a.email, a.created_at as accountCreated, a.avatar from "
+                        + "comment_article c, user_ a where a.id=c.id_user and c.id_article=? order by c.id desc  limit ? offset ?",
                 new ListMapper<>(new CommentMapper(true)), idArticle, limit, offset);
     }
+    public UserEntity createNewUser(Connection c, String login, String email, String hashpassword) throws SQLException {
+        return sql.insert(c,"insert into user_ (id,login,email,hash_password) values(nextval('user__id_seq'),?,?,?)", new UserMapper(),
+                login,email,hashpassword);
+    }
+    public Map<Long,UserEntity> getAllUsersDesc(Connection c) throws SQLException {
+        return sql.query(c,"SELECT * FROM user_ ORDER BY created_at DESC LIMIT 1", new UserIdMapper());
+    }
+    public UserEntity getByEmail(Connection c, String email) throws SQLException {
+        return sql.query(c,"select * from user_ u where u.email=?", new UserMapper(),email);
+    }
+    public UserEntity getByLogin(Connection c, String login) throws SQLException {
+        return sql.query(c,"select * from user_ u where u.login=?", new UserMapper(),login);
+    }
+    public void addUUID(Connection c, UserEntity user, UUID uuid) throws SQLException {
+        sql.insert(c,"insert into user_uuid (user_id, uuid) values (?, ?)", new ScalarHandler<Integer>(),user.getId() , uuid);
+    }
+    public void subscribe(Connection c, String username, String phone_number) throws SQLException {
+        sql.insert(c,"insert into  subscription(student_name, phone_number) values (?, ?)", new SubscriptionMapper(), username, phone_number);
+    }
+    public UserEntity getUserByUUID(Connection c, UUID uuid) throws SQLException {
+        return sql.query(c,"select u.id AS id, login, email, hash_password  from (user_ u join user_uuid uu on (u.id = uu.user_id and uu.uuid = ?))", new UserMapper(), uuid);
+    }
+    public void removeUUID(Connection c, UUID uuid) throws SQLException {
+        sql.update(c,"delete from user_uuid uu where uu.uuid=?",uuid);
+    }
+    public void removeAllUUID(Connection c, UserEntity user) throws SQLException {
+        sql.update(c,"delete from user_uuid uu where uu.user_id = ?", user.getId());
+    }
+    public CommentForArticle createComment(Connection c, CommentForm form, long idUser) throws SQLException {
+        return sql.insert(c, "insert into comment_article (id_article,id_user,content) values(?,?,?)",
+                new CommentMapper(false), form.getIdArticle(), idUser, form.getContent());
+    }
+
+    public ArticleEntity findArticleForNewCommentNotification(Connection c, long id) throws SQLException {
+        return sql.query(c, "select a.id, a.id_category, a.url, a.title from article a where a.id = ?", new MapArticleMapper(), id);
+    }
+
+    public int countComments(Connection c, long id) throws SQLException {
+        return sql.query(c, "select count(*) from comment_article where id_article=?", new ScalarHandler<Number>(), id).intValue();
+    }
+
+    public void updateArticleComments(Connection c, ArticleEntity article) throws SQLException {
+        sql.update(c, "update article set comments=? where id=?", article.getComments(), article.getId());
+    }
+    public void updateProfile(Connection c, Long user_id, String first_name, String last_name) throws SQLException {
+        sql.update(c, "update user_ set first_name = ?, last_name = ?  where id = ?", first_name, last_name, user_id);
+    }
+
 }

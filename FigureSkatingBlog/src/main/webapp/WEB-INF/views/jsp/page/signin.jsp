@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" 	  		uri="http://java.sun.com/jsp/jstl/core"%>
 <div class = "wrapper-bg">
   <div class="d-flex align-items-center">
     <div class=" reg container " style=" margin-bottom: 15%; margin-top: 7%;">
@@ -17,22 +18,23 @@
 
               <form>
                 <div class="form-outline mb-3">
-                  <input type="text" placeholder="логин или email" name="login" required class="form-control form-control-lg">
+                  <input type="text" placeholder="email" name="email" required class="form-control form-control-lg">
                 </div>
                 <div class="form-outline mb-3">
                   <input type="password" placeholder="пароль" name = "password" aria-describedby="passwordHelp" required class="form-control form-control-lg" />
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button type="button" class="btn btn-block btn-outline-primary text-body outline" style="font-size: large; border-width: 2px; border-color: #337ab7 ">Войти в аккаунт</button>
-                  <button type="button" class="btn btn-block btn-lg">
+                  <input type="submit" class="btn btn-block btn-outline-primary text-body outline" style="font-size: large; border-width: 2px; border-color: #337ab7 " value="Войти в аккаунт">
+                  <button type="button" class="btn btn-block btn-lg" href="#">
                     <i class="fab fa-google-plus fa-2x" style="color: #337ab7" aria-hidden="true"></i>
                   </button>
-                  <%--@elvariable id="message" type=""--%>
                   <c:if test="${not empty message}">
-                    <h6 class="text-danger">${message}</h6>
+                    <div class = "text-center">
+                      <h6 class="text-danger">${message}</h6>
+                    </div>
                   </c:if>
                 </div>
-                <p class="text-center text-muted mt-3 mb-0">Еще нет аккаунта? <a href="${pageContext.request.contextPath}/registration" class="fw-bold text-body"><u>Регистрация</u></a></p>
+                <p class="text-center text-muted mt-3 mb-0">Еще нет аккаунта? <a href="<c:url value="/registration"/>" class="fw-bold text-body"><u>Регистрация</u></a></p>
               </form>
 
             </div>

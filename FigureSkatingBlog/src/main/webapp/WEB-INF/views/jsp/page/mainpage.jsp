@@ -39,7 +39,7 @@
 
 <p class="text-center fs-1 mt-5 mb-5">Добро пожаловать в клуб фигурного катания Free Skating!</p>
 
-<div class="container-fluid bg-dark text-white">
+<div class="container-fluid bg-dark text-white d-flex justify-content-center">
     <section class="mb-5 p-3">
         <div class="row m-2">
             <div class="col p-5 m-5 text-wrap special_col" style="font-size:x-large; text-align: center;" >
@@ -66,7 +66,7 @@
 <div class="m-5">
     <section>
         <p class = "text-uppercase fs-2 mt-5" style="font-size: x-large;">O клубе</p>
-        <img src="static/images/Group 2линия.png" class="mb-3">
+        <img src="static/images/Group 2линия.png" class="mb-3" id="about">
         <div class="row">
             <div class="col text-wrap desc" style="font-size: larger;">
                 Студенты и взрослые! Наш Клуб - единственный в Казани, где вы сможете "с нуля" научиться кататья на коньках, а также усовершенствовать свое мастерство! Принять участие в соревнованиях для спортсменов-любителей, почувствовать себя настоящим спортсменом!

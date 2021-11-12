@@ -40,11 +40,11 @@
                         <ul class="list-unstyled mb-0" style="text-decoration: none;">
                             <li>
                                 <i class="fas fa-map-marked-alt"></i>
-                                <a href="#!" class="text-white">Московская ул., 1, Казань, Россия</a>
+                                <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#second_address">Московская ул., 1, Казань, Россия</a>
                             </li>
                             <li>
                                 <i class="fas fa-map-marked-alt"></i>
-                                <a href="#!" class="text-white">Чистопольская ул., 42, Казань, Россия</a>
+                                <a type="button" class="text-white" data-bs-toggle="modal" data-bs-target="#first_address">Чистопольская ул., 42, Казань, Россия</a>
                             </li>
                         </ul>
                     </div>
@@ -65,3 +65,32 @@
 <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); padding: 1%;">
     © 2021
 </div>
+
+
+<div class="modal fade" id="first_address" tabindex="-1" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content m-5 d-flex justify-content-center special_col" style="width: 550px; height: 500px;">
+            <div class="modal-header">
+                <h3 class="text-center" style="color:black">Чистопольская ул., 42</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac310bf2fde80446cb8e95c22ba12ba2db0caa2b65934be8bd1a7a8970296de1a&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="second_address" tabindex="-1" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content m-5 d-flex justify-content-center special_col" style="width: 550px; height: 500px;">
+            <div class="modal-header">
+                <h3 class="text-center" style="color:black">Московская ул.,1</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3Af6ab21d52883c67e2af60dbdfb0032b69bdd583953b3c38b98a89a57fcaeadf1&amp;source=constructor" width="500" height="400" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+

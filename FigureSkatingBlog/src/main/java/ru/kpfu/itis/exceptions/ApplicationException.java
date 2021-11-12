@@ -2,7 +2,6 @@ package ru.kpfu.itis.exceptions;
 
 
 public class ApplicationException extends RuntimeException {
-    private static final long serialVersionUID = -3180716741910924439L;
 
     public ApplicationException(String message) {
         super(message);

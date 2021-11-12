@@ -2,7 +2,6 @@ package ru.kpfu.itis.entities;
 import java.sql.Timestamp;
 import java.util.Objects;
 
-
 public class UserEntity extends AbstractEntity<Long> {
     private String login;
     private String email;
@@ -12,6 +11,34 @@ public class UserEntity extends AbstractEntity<Long> {
     private String password;
     private int groupId;
     private Timestamp created;
+    private Long id;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    private String phoneNumber;
+
+    public void setId(Long id){
+       this.id = id;
+   }
+   public Long getId(){
+       return id;
+   }
+
+
+
+    public UserEntity(String login, String email, String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
+    public  UserEntity(){}
+
     public String getEmail() {
         return email;
     }
@@ -84,4 +111,5 @@ public class UserEntity extends AbstractEntity<Long> {
     public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
+
 }

@@ -4,6 +4,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.kpfu.itis.services.BusinessService;
+
+import ru.kpfu.itis.services.SocialService;
+import ru.kpfu.itis.services.UserService;
 import ru.kpfu.itis.util.AppUtil;
 
 import java.sql.SQLException;
@@ -17,7 +20,9 @@ public class ServiceManager {
     final Properties applicationProperties = new Properties();
     final BasicDataSource dataSource;
     final BusinessService businessService;
+    final UserService userService;
     public static ServiceManager getInstance(ServletContext context) {
+
         ServiceManager instance = (ServiceManager) context.getAttribute(SERVICE_MANAGER);
         if (instance == null) {
             instance = new ServiceManager(context);
@@ -36,6 +41,8 @@ public class ServiceManager {
     public BusinessService getBusinessService() {
         return businessService;
     }
+    public UserService getUserService() {return  userService;}
+
 
     public String getApplicationProperty(String property) {
         return applicationProperties.getProperty(property);
@@ -46,6 +53,7 @@ public class ServiceManager {
         AppUtil.loadProperties(applicationProperties, "application.properties");
         dataSource = createBasicDataSource();
         businessService = new BusinessServiceImpl(this);
+        userService = new UserServiceImpl(this);
         LOGGER.info("ServiceManager instance created");
     }
 

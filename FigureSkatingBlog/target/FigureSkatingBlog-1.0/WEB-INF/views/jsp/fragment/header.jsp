@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <div id="brand">
         <img src="${pageContext.request.contextPath}/static/images/figure-skatingPNG.png" width="50%" alt="logo">
@@ -20,9 +21,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/about">О нас</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/signin">Вход | Регистрация</a>
-            </li>
+            <c:if test="${auth eq null}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/signin">Вход | Регистрация</a>
+                </li>
+            </c:if>
+            <c:if test="${auth eq true}">
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/profile">Мой профиль</a>
+                </li>
+            </c:if>
+
         </ul>
     </div>
 </div>
