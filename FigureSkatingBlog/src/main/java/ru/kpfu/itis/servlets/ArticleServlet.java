@@ -27,7 +27,7 @@ public class ArticleServlet extends AbstractController {
           List<CommentForArticle> comments = getBusinessService().listCommentsArticle(article.getId(), 0, Constants.LIMIT_COMMENTS_PER_PAGE);
           req.setAttribute("comments", comments);
           forwardToPage("article.jsp", req, resp);
-          out.println(comments);
+         
 
     }
 }
